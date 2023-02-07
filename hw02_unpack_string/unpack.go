@@ -10,12 +10,14 @@ import (
 
 var ErrInvalidString = errors.New("invalid string")
 
+var re = regexp.MustCompile(`^\d|\d\d| `)
+
 func Unpack(s string) (string, error) {
 	if s == "" {
 		return "", nil
 	}
 
-	if isNotValidString(s) {
+	if re.MatchString(s) {
 		return "", ErrInvalidString
 	}
 
@@ -42,8 +44,4 @@ func Unpack(s string) (string, error) {
 	}
 
 	return builder.String(), nil
-}
-
-func isNotValidString(s string) bool {
-	return regexp.MustCompile(`^\d|\d\d| `).MatchString(s)
 }
