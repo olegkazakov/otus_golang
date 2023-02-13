@@ -16,7 +16,11 @@ func Top10(s string) []string {
 func countAndTrim(fields []string, length int) []string {
 	counter := make(map[string]int)
 	for _, field := range fields {
-		counter[field]++
+		clearedField := strings.ToLower(strings.Trim(field, "-!.,'"))
+		if clearedField == "" {
+			continue
+		}
+		counter[clearedField]++
 	}
 
 	words := make([]string, 0, length)
