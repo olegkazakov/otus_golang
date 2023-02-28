@@ -68,13 +68,13 @@ func TestTop10(t *testing.T) {
 
 	t.Run("string with glued words", func(t *testing.T) {
 		expected := []string{
-			"and",     //2
-			"one",     //2
-			"cat",     //1
-			"cats",    //1
-			"dog",     //1
-			"dog,two", //1
-			"man",     //1
+			"and",     // 2
+			"one",     // 2
+			"cat",     // 1
+			"cats",    // 1
+			"dog",     // 1
+			"dog,two", // 1
+			"man",     // 1
 		}
 		require.Equal(t, expected, Top10(gluedWordsText))
 	})
