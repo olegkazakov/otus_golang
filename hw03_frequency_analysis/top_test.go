@@ -43,9 +43,40 @@ var text = `Как видите, он  спускается  по  лестни�
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
 
+var shortText = "Это короткий текст. В нем мало слов. Это хорошо."
+
+var gluedWordsText = "cat and dog, one dog,two cats and one man"
+
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
 		require.Len(t, Top10(""), 0)
+	})
+
+	t.Run("short text for lexicographic verification", func(t *testing.T) {
+		expected := []string{
+			"это",      // 2
+			"в",        // 1
+			"короткий", // 1
+			"мало",     // 1
+			"нем",      // 1
+			"слов",     // 1
+			"текст",    // 1
+			"хорошо",   // 1
+		}
+		require.Equal(t, expected, Top10(shortText))
+	})
+
+	t.Run("string with glued words", func(t *testing.T) {
+		expected := []string{
+			"and",     //2
+			"one",     //2
+			"cat",     //1
+			"cats",    //1
+			"dog",     //1
+			"dog,two", //1
+			"man",     //1
+		}
+		require.Equal(t, expected, Top10(gluedWordsText))
 	})
 
 	t.Run("positive test", func(t *testing.T) {
