@@ -105,6 +105,7 @@ func (l *list) MoveToFront(i *ListItem) {
 
 	i.Prev = nil
 	i.Next = l.front
+	l.front.Prev = i
 	l.front = i
 }
 
