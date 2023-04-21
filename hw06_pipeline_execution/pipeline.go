@@ -24,7 +24,6 @@ func (stage Stage) process(in In, done In) Bi {
 				}
 				stageChannel <- value
 			}
-
 		}
 	}(stageChannel, in)
 
