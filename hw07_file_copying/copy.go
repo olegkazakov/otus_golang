@@ -92,7 +92,6 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 
 	bar := pb.Full.Start64(readLimit)
-	bar.Set("my_green_string", "green")
 	barReader := bar.NewProxyReader(sourceFile)
 	defer bar.Finish()
 
