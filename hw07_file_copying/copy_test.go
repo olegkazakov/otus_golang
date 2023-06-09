@@ -11,50 +11,50 @@ func TestCopy(t *testing.T) {
 	var (
 		source      = "testdata/input.txt"
 		destination = "testdata/output.txt"
-		offset      int64
-		limit       int64
+		testOffset  int64
+		testLimit   int64
 	)
 
 	t.Run("empty source filename", func(t *testing.T) {
-		err := Copy("", destination, offset, limit)
+		err := Copy("", destination, testOffset, testLimit)
 		require.ErrorIs(t, err, ErrSourceFileIsNotSpecified)
 	})
 
 	t.Run("empty destination filename", func(t *testing.T) {
-		err := Copy(source, "", offset, limit)
+		err := Copy(source, "", testOffset, testLimit)
 		require.ErrorIs(t, err, ErrDestinationFileIsNotSpecified)
 	})
 
 	t.Run("source and destination file paths are identical", func(t *testing.T) {
-		err := Copy(source, source, offset, limit)
+		err := Copy(source, source, testOffset, testLimit)
 		require.ErrorIs(t, err, ErrSourceAndDestinationPathsAreIdentical)
 	})
 
 	t.Run("unsupported source file", func(t *testing.T) {
-		err := Copy("/dev/urandom", destination, offset, limit)
+		err := Copy("/dev/urandom", destination, testOffset, testLimit)
 		require.ErrorIs(t, err, ErrUnsupportedFile)
 	})
 
-	t.Run("negative offset", func(t *testing.T) {
-		err := Copy(source, destination, -1, limit)
+	t.Run("negative testOffset", func(t *testing.T) {
+		err := Copy(source, destination, -1, testLimit)
 		require.ErrorIs(t, err, ErrNegativeOffset)
 	})
 
-	t.Run("negative limit", func(t *testing.T) {
-		err := Copy(source, destination, offset, -1)
+	t.Run("negative testLimit", func(t *testing.T) {
+		err := Copy(source, destination, testOffset, -1)
 		require.ErrorIs(t, err, ErrNegativeLimit)
 	})
 
-	t.Run("offset exceeds file size", func(t *testing.T) {
+	t.Run("testOffset exceeds file size", func(t *testing.T) {
 		sourceFileStat, _ := os.Stat(source)
-		err := Copy(source, destination, sourceFileStat.Size()+1, limit)
+		err := Copy(source, destination, sourceFileStat.Size()+1, testLimit)
 		require.ErrorIs(t, err, ErrOffsetExceedsFileSize)
 	})
 
-	t.Run("limit greater than source file size", func(t *testing.T) {
+	t.Run("testLimit greater than source file size", func(t *testing.T) {
 		sourceFileStat, _ := os.Stat(source)
 		sourceFileSize := sourceFileStat.Size()
-		err := Copy(source, destination, offset, sourceFileSize+1024)
+		err := Copy(source, destination, testOffset, sourceFileSize+1024)
 		require.Nil(t, err)
 		destinationFileStat, _ := os.Stat(destination)
 		require.Equal(t, sourceFileSize, destinationFileStat.Size())
