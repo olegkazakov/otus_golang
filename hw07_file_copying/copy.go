@@ -50,7 +50,7 @@ func Copy(fromPath, toPath string, offset, limit int64) error {
 	}
 
 	defer func() error {
-		err := sourceFile.Close()
+		err = sourceFile.Close()
 		if err != nil {
 			return err
 		}
