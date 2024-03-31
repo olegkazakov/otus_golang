@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/stretchr/testify/require"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -51,7 +52,7 @@ func TestReadDir(t *testing.T) {
 	})
 
 	t.Run("empty directory", func(t *testing.T) {
-		err := os.Mkdir(emptyDirPath, 0755)
+		err := os.Mkdir(emptyDirPath, 0o755)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -62,7 +63,7 @@ func TestReadDir(t *testing.T) {
 	})
 
 	t.Run("reading directory error", func(t *testing.T) {
-		err := os.Mkdir(invalidDirectoryPath, 0000)
+		err := os.Mkdir(invalidDirectoryPath, 0o000)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -75,7 +76,7 @@ func TestReadDir(t *testing.T) {
 	})
 
 	t.Run("incorrect file name error", func(t *testing.T) {
-		err := os.Mkdir(incorrectFileNameDirPath, 0755)
+		err := os.Mkdir(incorrectFileNameDirPath, 0o755)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -93,12 +94,12 @@ func TestReadDir(t *testing.T) {
 	})
 
 	t.Run("file is a directory error", func(t *testing.T) {
-		err := os.Mkdir(fileAsDirectoryPath, 0755)
+		err := os.Mkdir(fileAsDirectoryPath, 0o755)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		err = os.Mkdir(fileAsDirectoryFilePath, 0755)
+		err = os.Mkdir(fileAsDirectoryFilePath, 0o755)
 		if err != nil {
 			log.Fatal(err)
 		}
