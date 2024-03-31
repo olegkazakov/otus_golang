@@ -35,23 +35,23 @@ func TestCopy(t *testing.T) {
 		require.ErrorIs(t, err, ErrUnsupportedFile)
 	})
 
-	t.Run("negative testOffset", func(t *testing.T) {
+	t.Run("negative offset", func(t *testing.T) {
 		err := Copy(source, destination, -1, testLimit)
 		require.ErrorIs(t, err, ErrNegativeOffset)
 	})
 
-	t.Run("negative testLimit", func(t *testing.T) {
+	t.Run("negative limit", func(t *testing.T) {
 		err := Copy(source, destination, testOffset, -1)
 		require.ErrorIs(t, err, ErrNegativeLimit)
 	})
 
-	t.Run("testOffset exceeds file size", func(t *testing.T) {
+	t.Run("offset exceeds file size", func(t *testing.T) {
 		sourceFileStat, _ := os.Stat(source)
 		err := Copy(source, destination, sourceFileStat.Size()+1, testLimit)
 		require.ErrorIs(t, err, ErrOffsetExceedsFileSize)
 	})
 
-	t.Run("testLimit greater than source file size", func(t *testing.T) {
+	t.Run("limit greater than source file size", func(t *testing.T) {
 		sourceFileStat, _ := os.Stat(source)
 		sourceFileSize := sourceFileStat.Size()
 		err := Copy(source, destination, testOffset, sourceFileSize+1024)
